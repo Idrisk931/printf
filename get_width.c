@@ -4,7 +4,7 @@
  * is_digit - Checks if a character is a digit.
  * @c: The character to check.
  *
- * Return: 1 if c is a digit, 0 otherwise.
+ * Return: 1 if c is a digit, 0 if not.
  */
 int is_digit(char c)
 {
@@ -13,7 +13,7 @@ int is_digit(char c)
 
 /**
  * get_width - Calculates the width for printing
- * by Joseph and Ciny
+ * Authors - Idris and Jarvis
  * @format: Formatted string in which to print the arguments.
  * @i: List of arguments to be printed.
  * @list: list of arguments.
@@ -46,10 +46,4 @@ int get_width(const char *format, int *i, va_list list)
 
 	return (width);
 }
-
-
-
-
-
-
 
