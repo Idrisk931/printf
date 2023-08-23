@@ -7,10 +7,24 @@
  * @i: List of arguments to be printed.
  * @list: list of arguments.
  *
+<<<<<<< HEAD
  * Return: Precision.
+=======
+ * This function analyzes a formatted string and extracts the precision
+ * value specified within it. The precision value is used for printing
+ * purposes and is typically indicated by a period followed by digits
+ * or an asterisk in the format string.
+ *
+ * @format: The formatted string containing the print format.
+ * @i: A pointer to the current position in the format string.
+ * @list: The list of arguments for the formatted string.
+ *
+ * Return: The extracted precision value.
+ *
+>>>>>>> b06aaa7e0bc284312d13e19f17cf7f7fa29eaee3
  */
-int get_precision(const char *format, int *i, va_list list)
-{
+	int get_precision(const char *format, int *i, va_list list)
+	{
 	int curr_i = *i + 1;
 	int precision = -1;
 
