@@ -1,19 +1,8 @@
 #include "main.h"
 
 /**
- * is_digit - Checks if a character is a digit.
- * @c: The character to check.
- *
- * Return: 1 if c is a digit, 0 if not.
- */
-int is_digit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-/**
  * get_width - Calculates the width for printing
- * Authors - Idris and Jarvis
+ * by idris and javis
  * @format: Formatted string in which to print the arguments.
  * @i: List of arguments to be printed.
  * @list: list of arguments.
@@ -46,4 +35,3 @@ int get_width(const char *format, int *i, va_list list)
 
 	return (width);
 }
-

@@ -2,7 +2,17 @@
 
 /************************* PRINT CHAR *************************/
 
-/* Print a single character */
+/**
+ * print_char - Prints a char
+ * by idris and javis
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: Width
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_char(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
@@ -10,10 +20,17 @@ int print_char(va_list types, char buffer[],
 
 	return (handle_write_char(c, buffer, flags, width, precision, size));
 }
-
 /************************* PRINT A STRING *************************/
-
-/* Print a string */
+/**
+ * print_string - Prints a string
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
@@ -25,8 +42,6 @@ int print_string(va_list types, char buffer[],
 	UNUSED(width);
 	UNUSED(precision);
 	UNUSED(size);
-
-	/* Handle NULL strings */
 	if (str == NULL)
 	{
 		str = "(null)";
@@ -34,15 +49,12 @@ int print_string(va_list types, char buffer[],
 			str = "      ";
 	}
 
-	/* Calculate the length of the string */
 	while (str[length] != '\0')
 		length++;
 
-	/* Apply precision if necessary */
 	if (precision >= 0 && precision < length)
 		length = precision;
 
-	/* Handle width padding */
 	if (width > length)
 	{
 		if (flags & F_MINUS)
@@ -57,16 +69,23 @@ int print_string(va_list types, char buffer[],
 			for (i = width - length; i > 0; i--)
 				write(1, " ", 1);
 			write(1, &str[0], length);
-	return (width);
+			return (width);
 		}
 	}
 
 	return (write(1, str, length));
 }
-
 /************************* PRINT PERCENT SIGN *************************/
-
-/* Print a percent sign */
+/**
+ * print_percent - Prints a percent sign
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_percent(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
@@ -80,18 +99,60 @@ int print_percent(va_list types, char buffer[],
 }
 
 /************************* PRINT INT *************************/
-
-/* Print an integer */
+/**
+ * print_int - Print int
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_int(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	/* Function logic remains unchanged, comments added for clarity */
+	int i = BUFF_SIZE - 2;
+	int is_negative = 0;
+	long int n = va_arg(types, long int);
+	unsigned long int num;
 
+	n = convert_size_number(n, size);
+
+	if (n == 0)
+		buffer[i--] = '0';
+
+	buffer[BUFF_SIZE - 1] = '\0';
+	num = (unsigned long int)n;
+
+	if (n < 0)
+	{
+		num = (unsigned long int)((-1) * n);
+		is_negative = 1;
+	}
+
+	while (num > 0)
+	{
+		buffer[i--] = (num % 10) + '0';
+		num /= 10;
+	}
+
+	i++;
+
+	return (write_number(is_negative, i, buffer, flags, width, precision, size));
 }
 
 /************************* PRINT BINARY *************************/
-
-/* Print an unsigned binary number */
+/**
+ * print_binary - Prints an unsigned number
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Numbers of char printed.
+ */
 int print_binary(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
@@ -119,8 +180,8 @@ int print_binary(va_list types, char buffer[],
 		if (sum || i == 31)
 		{
 			char z = '0' + a[i];
-			write(1, &z, 1);
 
+			write(1, &z, 1);
 			count++;
 		}
 	}
